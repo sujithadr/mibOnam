@@ -24,13 +24,25 @@
             border-radius: 10px;
             text-align: center;
         }
+        .video-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+        }
         #video {
             border: 2px solid #333;
             border-radius: 5px;
         }
         #result {
-            margin-top: 10px;
+            position: absolute;
+            bottom: 10px;
+            left: 0;
+            right: 0;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 5px;
             font-weight: bold;
+            display: none;
         }
         #nextScanButton {
             margin-top: 10px;
@@ -46,9 +58,11 @@
 <body>
     <div class="container">
         <h1>QR Code Scanner</h1>
-        <video id="video" style="width: 300px; height: 300px;"></video>
-        <div id="result"></div>
-        <button id="nextScanButton">Next Scan</button>
+        <div class="video-container">
+            <video id="video" style="width: 300px; height: 300px;"></video>
+            <div id="result"></div>
+        </div>
+        <button id="nextScanButton" style="display: none;">Next Scan</button>
     </div>
 
     <script type="module">
@@ -71,6 +85,7 @@
 
         nextScanButton.addEventListener('click', () => {
             resultElem.textContent = '';
+            resultElem.style.display = 'none';
             nextScanButton.style.display = 'none';
             qrScanner.start().catch(err => {
                 console.error("Unable to start scanning.", err);
