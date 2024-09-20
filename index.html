@@ -82,9 +82,9 @@
             }
             
             const prefix = text.substring(0, 3);
-            const name = parts[0].substring(3);
-            const encodingValue = parts[1];
-            const count = parts[2];
+            const name = parts[1].substring(3);
+            const encodingValue = parts[2];
+            const count = parts[3];
             
             return { prefix, name, encodingValue, count };
         }
