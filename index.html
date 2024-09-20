@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QR Code Scanner</title>
-    <script src="https://unpkg.com/html5-qrcode/minified/html5-qrcode.min.js"></script>
     <style>
         body {
             background-color: #90EE90;
@@ -28,38 +27,24 @@
 </head>
 <body>
     <div class="container">
-        <h1>QR Code Scanner..</h1>
-        <div id="reader" style="width: 300px; height: 300px;"></div>
-        <button id="scanButton">Start Scanning...</button>
+        <h1>QR Code Scanner</h1>
+        <video id="video" style="width: 300px; height: 300px;"></video>
         <div id="result"></div>
     </div>
 
-    <script>
-        const scanButton = document.getElementById('scanButton');
-        const result = document.getElementById('result');
-        const html5QrCode = new Html5Qrcode("reader");
+    <script type="module">
+        import QrScanner from "https://cdn.jsdelivr.net/npm/qr-scanner@1.4.1/qr-scanner.min.js";
+        
+        const videoElem = document.getElementById('video');
+        const resultElem = document.getElementById('result');
+        
+        const qrScanner = new QrScanner(videoElem, result => {
+            resultElem.textContent = `Scanned: ${result}`;
+            qrScanner.stop();
+        });
 
-        scanButton.addEventListener('click', () => {
-            html5QrCode.start(
-                { facingMode: "environment" }, // Use the back camera
-                {
-                    fps: 10,    // Optional, frame per seconds for qr code scanning
-                    qrbox: { width: 250, height: 250 }  // Optional, if you want bounded box UI
-                },
-                (decodedText, decodedResult) => {
-                    // Handle the result here
-                    html5QrCode.stop().then(() => {
-                        result.innerHTML = `Scanned: ${decodedText}`;
-                    }).catch(err => {
-                        console.error("Failed to stop scanning.", err);
-                    });
-                },
-                (errorMessage) => {
-                    // parse error, ignore it.
-                }
-            ).catch(err => {
-                console.error("Unable to start scanning.", err);
-            });
+        qrScanner.start().catch(err => {
+            console.error("Unable to start scanning.", err);
         });
     </script>
 </body>
