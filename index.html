@@ -81,12 +81,8 @@
                 return { error: 'Invalid format' };
             }
             
-            const prefix = text.substring(0, 3);
-            const name = parts[1].substring(3);
-            const encodingValue = parts[2];
-            const count = parts[3];
-            
-            return { prefix, name, encodingValue, count };
+            const [prefix, name, encode, count] = parts;
+            return { prefix, name, encode, count };
         }
         
         const qrScanner = new QrScanner(videoElem, result => {
@@ -96,7 +92,7 @@
             } else {
                 resultElem.innerHTML = `Welcome ${parsedResult.name}<br>
                                         ${parsedResult.count}<br>
-                                        Excel Row`;
+                                        ${parsedResult.encode}`;
             }
             resultElem.style.display = 'block';
             nextScanButton.style.display = 'block';
