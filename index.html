@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Scanner Preview</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-green-200 flex items-center justify-center min-h-screen p-4">
+    <div class="bg-white bg-opacity-80 p-6 rounded-lg shadow-lg text-center max-w-md w-full">
+        <h1 class="text-2xl font-bold mb-4">QR Code Scanner</h1>
+        <button id="scanButton" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            Scan QR Code
+        </button>
+        <div id="scanningArea" class="mt-4 p-4 bg-gray-200 rounded hidden">
+            <p>Scanning...</p>
+            <div class="w-full h-48 bg-black mt-2 flex items-center justify-center">
+                <div class="w-16 h-16 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
+            </div>
+        </div>
+        <div id="resultArea" class="mt-4 font-bold hidden"></div>
+    </div>
+
+    <script>
+        const scanButton = document.getElementById('scanButton');
+        const scanningArea = document.getElementById('scanningArea');
+        const resultArea = document.getElementById('resultArea');
+
+        scanButton.addEventListener('click', () => {
+            scanningArea.classList.remove('hidden');
+            resultArea.classList.add('hidden');
+            
+            setTimeout(() => {
+                scanningArea.classList.add('hidden');
+                resultArea.classList.remove('hidden');
+                resultArea.innerHTML = 'Welcome, John Doe!<br>Serial Number: 12345';
+            }, 2000);
+        });
+    </script>
+</body>
+</html>
