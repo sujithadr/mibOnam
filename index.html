@@ -47,6 +47,9 @@
             line-height: 1.2;
             word-wrap: break-word;
         }
+        #result .count {
+            color: red;
+        }
         #nextScanButton {
             margin-top: 10px;
             padding: 10px 20px;
@@ -91,7 +94,7 @@
                 resultElem.innerHTML = `Error: ${parsedResult.error}`;
             } else {
                 resultElem.innerHTML = `Welcome ${parsedResult.name}<br>
-                                        ${parsedResult.count}<br>
+                                        <span class="count">${parsedResult.count}</span><br>
                                         ${parsedResult.encode}`;
             }
             resultElem.style.display = 'block';
