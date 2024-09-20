@@ -22,6 +22,21 @@
         #result {
             margin-top: 20px;
             font-weight: bold;
+            font-size: 24px; /* Larger font size for the scanned data */
+        }
+        #nextScanButton {
+            display: none; /* Initially hidden */
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 20px; /* Big font size for the button */
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #nextScanButton:hover {
+            background-color: #0056b3;
         }
     </style>
 </head>
@@ -30,6 +45,7 @@
         <h1>QR Code Scanner</h1>
         <video id="video" style="width: 300px; height: 300px;"></video>
         <div id="result"></div>
+        <button id="nextScanButton">Next Scan</button>
     </div>
 
     <script type="module">
@@ -37,14 +53,25 @@
         
         const videoElem = document.getElementById('video');
         const resultElem = document.getElementById('result');
+        const nextScanButton = document.getElementById('nextScanButton');
         
         const qrScanner = new QrScanner(videoElem, result => {
             resultElem.textContent = `Scanned: ${result}`;
+            resultElem.style.display = 'block';
+            nextScanButton.style.display = 'block';
             qrScanner.stop();
         });
 
         qrScanner.start().catch(err => {
             console.error("Unable to start scanning.", err);
+        });
+
+        nextScanButton.addEventListener('click', () => {
+            resultElem.textContent = '';
+            nextScanButton.style.display = 'none';
+            qrScanner.start().catch(err => {
+                console.error("Unable to start scanning.", err);
+            });
         });
     </script>
 </body>
