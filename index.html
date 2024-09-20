@@ -43,9 +43,9 @@
             padding: 5px;
             font-weight: bold;
             display: none;
-            font-size: 300%; /* Increased font size to 300% */
-            line-height: 1.2; /* Adjusted line height for better readability */
-            word-wrap: break-word; /* Ensures long text wraps within the container */
+            font-size: 300%;
+            line-height: 1.2;
+            word-wrap: break-word;
         }
         #nextScanButton {
             margin-top: 10px;
@@ -75,8 +75,29 @@
         const resultElem = document.getElementById('result');
         const nextScanButton = document.getElementById('nextScanButton');
         
+        function parseScannedText(text) {
+            const parts = text.split('&&');
+            if (parts.length !== 3) {
+                return { error: 'Invalid format' };
+            }
+            
+            const prefix = text.substring(0, 3);
+            const name = parts[0].substring(3);
+            const encodingValue = parts[1];
+            const count = parts[2];
+            
+            return { prefix, name, encodingValue, count };
+        }
+        
         const qrScanner = new QrScanner(videoElem, result => {
-            resultElem.textContent = `Scanned: ${result}`;
+            const parsedResult = parseScannedText(result);
+            if (parsedResult.error) {
+                resultElem.innerHTML = `Error: ${parsedResult.error}`;
+            } else {
+                resultElem.innerHTML = `Welcome ${parsedResult.name}<br>
+                                        ${parsedResult.count}<br>
+                                        Excel Row`;
+            }
             resultElem.style.display = 'block';
             nextScanButton.style.display = 'block';
             qrScanner.stop();
