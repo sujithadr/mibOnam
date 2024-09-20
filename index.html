@@ -6,7 +6,7 @@
     <title>QR Code Scanner</title>
     <style>
         body {
-            background-image: url('background.jpg');
+            background-image: url('images/background.jpg');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -94,8 +94,8 @@
                 resultElem.innerHTML = `Error: ${parsedResult.error}`;
             } else {
                 resultElem.innerHTML = `Welcome ${parsedResult.name}<br>
-                                        <span class="count">${parsedResult.count}</span><br>
-                                        ${parsedResult.encode}`;
+                                        Total count: <span class="count">${parsedResult.count}</span><br>
+                                        Row No. ${parsedResult.encode}`;
             }
             resultElem.style.display = 'block';
             nextScanButton.style.display = 'block';
