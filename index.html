@@ -88,19 +88,32 @@
             return { prefix, name, encode, count };
         }
         
+        //const qrScanner = new QrScanner(videoElem, result => {
+         //   const parsedResult = parseScannedText(result);
+         //   if (parsedResult.error) {
+        //        resultElem.innerHTML = `Error: ${parsedResult.error}`;
+        //    } else {
+        //        resultElem.innerHTML = `Welcome ${parsedResult.name}<br>
+        //                                Total count: <span class="count">${parsedResult.count}</span><br>
+        //                                Row No. ${parsedResult.encode}`;
+        //    }
+        //    resultElem.style.display = 'block';
+        //    nextScanButton.style.display = 'block';
+       //     qrScanner.stop();
+       // });
         const qrScanner = new QrScanner(videoElem, result => {
-            const parsedResult = parseScannedText(result);
-            if (parsedResult.error) {
-                resultElem.innerHTML = `Error: ${parsedResult.error}`;
-            } else {
-                resultElem.innerHTML = `Welcome ${parsedResult.name}<br>
-                                        Total count: <span class="count">${parsedResult.count}</span><br>
-                                        Row No. ${parsedResult.encode}`;
-            }
-            resultElem.style.display = 'block';
-            nextScanButton.style.display = 'block';
-            qrScanner.stop();
-        });
+    const parsedResult = parseScannedText(result);
+    if (parsedResult.error) {
+        resultElem.innerHTML = `Error: ${parsedResult.error}`;
+    } else {
+        resultElem.innerHTML = `Welcome ${parsedResult.name}<br>
+                                Total count: <span class="count">${parsedResult.count}</span><br>
+                                Row No. ${parsedResult.encode}`;
+    }
+    resultElem.style.display = 'block';
+    nextScanButton.style.display = 'block';  // This line is now always executed
+    qrScanner.stop();
+});
 
         qrScanner.start().catch(err => {
             console.error("Unable to start scanning.", err);
