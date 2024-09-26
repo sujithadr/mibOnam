@@ -87,6 +87,11 @@
             const [prefix, name, encode, count] = parts;
             return { prefix, name, encode, count };
         }
+
+        function speakText(text) {
+           const utterance = new SpeechSynthesisUtterance(text);
+           speechSynthesis.speak(utterance);
+       }
         
         //const qrScanner = new QrScanner(videoElem, result => {
          //   const parsedResult = parseScannedText(result);
@@ -101,7 +106,8 @@
         //    nextScanButton.style.display = 'block';
        //     qrScanner.stop();
        // });
-        const qrScanner = new QrScanner(videoElem, result => {
+    let audioText = '';
+    const qrScanner = new QrScanner(videoElem, result => {
     const parsedResult = parseScannedText(result);
     if (parsedResult.error) {
         resultElem.innerHTML = `Error: ${parsedResult.error}`;
@@ -109,6 +115,8 @@
         resultElem.innerHTML = `Welcome ${parsedResult.name}<br>
                                 Total count: <span class="count">${parsedResult.count}</span><br>
                                 Row No. ${parsedResult.encode}`;
+        audioText = `Welcome ${parsedResult.name}. Total count: ${parsedResult.count}. Row Number: ${parsedResult.encode}`;
+        speakText(audioText);
     }
     resultElem.style.display = 'block';
     nextScanButton.style.display = 'block';  // This line is now always executed
@@ -123,6 +131,7 @@
             resultElem.textContent = '';
             resultElem.style.display = 'none';
             nextScanButton.style.display = 'none';
+            speechSynthesis.cancel();
             qrScanner.start().catch(err => {
                 console.error("Unable to start scanning.", err);
             });
